@@ -4,458 +4,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prama Danawira - Marketing & Project Management Professional</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2c3e50',
+                        secondary: '#34495e',
+                        accent: '#7f8c8d',
+                        light: '#ecf0f1',
+                        dark: '#2c3e50',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
         
-        :root {
-            --primary: #2c3e50;
-            --secondary: #34495e;
-            --accent: #7f8c8d;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
-            --text: #2c3e50;
-            --text-light: #7f8c8d;
-            --background: #f9f9f9;
-            --card-bg: #ffffff;
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        body {
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        section {
-            padding: 60px 0;
-        }
-        
-        h1, h2, h3, h4 {
-            margin-bottom: 20px;
-            color: var(--dark);
-            font-weight: 600;
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-        }
-        
-        h2 {
-            font-size: 2.2rem;
-            position: relative;
-            padding-bottom: 15px;
-        }
-        
-        h2:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            height: 3px;
-            width: 60px;
-            background: var(--accent);
-        }
-        
-        h3 {
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        
-        p {
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-        }
-        
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .card {
-            background: var(--card-bg);
-            border-radius: 6px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
-            border-left: 4px solid var(--accent);
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Header Styles */
-        header {
-            background: linear-gradient(to right, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 100px 0 80px;
-            text-align: center;
-        }
-        
-        .profile-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            margin: 25px 0;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
-            border-radius: 30px;
-        }
-        
-        /* Professional Summary */
-        .summary {
-            background: var(--card-bg);
-        }
-        
-        /* Experience Section */
-        .experience-item {
-            margin-bottom: 40px;
-        }
-        
-        .experience-item h3 {
-            color: var(--primary);
-        }
-        
-        .date {
-            color: var(--text-light);
-            font-style: italic;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-        
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .skill-category {
-            background: var(--card-bg);
-            border-radius: 6px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-top: 3px solid var(--accent);
-        }
-        
-        .skill-list {
-            list-style-type: none;
-        }
-        
-        .skill-list li {
-            margin-bottom: 12px;
-            padding-left: 25px;
-            position: relative;
-            color: var(--text-light);
-        }
-        
-        .skill-list li:before {
-            content: '•';
-            color: var(--accent);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-            font-size: 1.2rem;
-        }
-        
-        /* Education & Certifications */
-        .education-certs {
-            background: var(--card-bg);
-        }
-        
-        .edu-certs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 40px 0;
-            text-align: center;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        
-        .social-links a {
-            color: white;
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            color: var(--accent);
-        }
-        
-        /* Section Titles */
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .section-title h2 {
-            display: inline-block;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            h2 {
-                font-size: 1.8rem;
-            }
-            
-            .contact-info {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-            
-            .contact-item {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .skills-grid,
-            .edu-certs-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-img {
-                width: 150px;
-                height: 150px;
-            }
+        /* Progress bar animation */
+        .progress-bar {
+            transition: width 1.5s ease-in-out;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800">
     <!-- Header Section -->
-    <header>
-        <div class="container">
-            <img src="https://danawiraprama.github.io/Resume/ResumePrama.avif" alt="Prama Danawira" class="profile-img">
-            <div class="header-content">
-                <h1><span style="color: white;">Prama Danawira</span></h1>
-                <p><span style="color: white;">Marketing & Project Management Professional</span></p>
+    <header class="bg-gradient-to-r from-primary to-secondary text-white py-16 md:py-20">
+        <div class="container mx-auto px-4 text-center">
+            <div class="animate-fade-in">
+                <img src="https://danawiraprama.github.io/Resume/ResumePrama.avif" alt="Prama Danawira" 
+                     class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white border-opacity-20 shadow-lg mx-auto mb-6">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4">Prama Danawira</h1>
+                <p class="text-lg md:text-xl mb-8">Marketing & Project Management Professional</p>
                 
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
+                <div class="flex flex-wrap justify-center gap-3 mb-8">
+                    <div class="flex items-center bg-white bg-opacity-10 px-4 py-2 rounded-full">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
                         <span>Jakarta, Indonesia</span>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
+                    <div class="flex items-center bg-white bg-opacity-10 px-4 py-2 rounded-full">
+                        <i class="fas fa-envelope mr-2"></i>
                         <span>prama.danawira@gmail.com</span>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
+                    <div class="flex items-center bg-white bg-opacity-10 px-4 py-2 rounded-full">
+                        <i class="fas fa-phone mr-2"></i>
                         <span>+62 812-8494-2940</span>
                     </div>
                 </div>
                 
-                <a href="https://danawiraprama.github.io/Resume/Prama_Danawira_Resume.pdf" class="btn"><i class="fas fa-download"></i> Download Resume (PDF)</a>
+                <a href="https://danawiraprama.github.io/Resume/Prama_Danawira_Resume.pdf" 
+                   class="bg-white text-primary px-6 py-3 rounded-full font-semibold inline-flex items-center hover:bg-opacity-90 transition-all duration-300 shadow-md">
+                    <i class="fas fa-download mr-2"></i> Download Resume (PDF)
+                </a>
             </div>
         </div>
     </header>
 
     <!-- Professional Summary -->
-    <section class="summary">
-        <div class="container">
-            <div class="section-title">
-                <h2>Professional Summary</h2>
-            </div>
-            <div class="card">
-                <p>Results-driven marketing and project management professional with over a decade of experience across industries including public relations, healthcare, banking, and real estate. Adept in developing strategies that boost brand visibility, generate revenue, and foster client retention. Strong communicator and collaborator with international exposure, especially in the U.S. healthcare environment. Holds a Bachelor's degree in Marketing Economics and multiple industry-recognized certifications.</p>
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 relative pb-3 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-accent">
+                Professional Summary
+            </h2>
+            <div class="max-w-3xl mx-auto bg-gray-50 p-6 md:p-8 rounded-lg shadow-md border-l-4 border-accent animate-fade-in">
+                <p class="text-gray-700 leading-relaxed">
+                    Results-driven marketing and project management professional with over a decade of experience across industries including public relations, healthcare, banking, and real estate. Adept in developing strategies that boost brand visibility, generate revenue, and foster client retention. Strong communicator and collaborator with international exposure, especially in the U.S. healthcare environment. Holds a Bachelor's degree in Marketing Economics and multiple industry-recognized certifications.
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-  <!--  <section>
-        <div class="container">
-            <div class="section-title">
-                <h2>Areas of Expertise</h2>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Digital Marketing</h3>
-                    <ul class="skill-list">
-                        <li>Meta Ads (Facebook, Instagram, WhatsApp, Messenger)</li>
-                        <li>Social Media Management</li>
-                        <li>Content Creation & Copywriting</li>
-                        <li>Brand Awareness & Engagement</li>
-                        <li>Lead Generation & Sales Conversion</li>
-                    </ul>
-                </div>
-                
-                <div class="skill-category">
-                    <h3>Research & Trade</h3>
-                    <ul class="skill-list">
-                        <li>Product Research & Sourcing</li>
-                        <li>International Trade & Shipping</li>
-                        <li>Market Analysis (Shopee, Tokopedia)</li>
-                        <li>Electronics & Various Product Categories</li>
-                        <li>Profit Margin Optimization</li>
-                    </ul>
-                </div>
-                
-                <div class="skill-category">
-                    <h3>Website Services</h3>
-                    <ul class="skill-list">
-                        <li>Professional Web Design</li>
-                        <li>MSME Digital Transformation</li>
-                        <li>Fresh & Modern Design Concepts</li>
-                        <li>Digital Presence Development</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
--->
     <!-- Experience Section -->
-    <section class="experience">
-        <div class="container">
-            <div class="section-title">
-                <h2>Professional Experience</h2>
-            </div>
+    <section class="py-12 md:py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 relative pb-3 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-accent">
+                Professional Experience
+            </h2>
             
-            <div class="card">
-                <div class="experience-item">
-                    <h3>Project Manager</h3>
-                    <p class="date">Contentro dot com, Jakarta (Nov 2018 – NOW)</p>
-                    <ul class="skill-list">
-                        <li>Developed a new Lead Generation Campaign product, increasing company revenue by 15%</li>
-                        <li>Led production of 200+ media releases annually and contributed to 4,000+ published articles</li>
-                        <li>Secured coverage in 280+ media outlets, strengthening brand awareness for major clients</li>
-                        <li>Managed content development for websites, blogs, social media, and newsletters</li>
-                        <li>Supervised digital event execution and ensured alignment with clients' brand goals</li>
-                        <li>Clients included Toyota, Bukalapak, Tempo Media Group, Jakarta Intercultural School, and various SOEs</li>
+            <div class="space-y-6 max-w-4xl mx-auto">
+                <!-- Experience 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
+                    <h3 class="text-xl font-semibold text-primary">Project Manager</h3>
+                    <p class="text-gray-600 italic mb-4">Contentro dot com, Jakarta (Nov 2018 – NOW)</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Developed a new Lead Generation Campaign product, increasing company revenue by 15%</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Led production of 200+ media releases annually and contributed to 4,000+ published articles</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Secured coverage in 280+ media outlets, strengthening brand awareness for major clients</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Managed content development for websites, blogs, social media, and newsletters</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Supervised digital event execution and ensured alignment with clients' brand goals</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Clients included Toyota, Bukalapak, Tempo Media Group, Jakarta Intercultural School, and various SOEs</span>
+                        </li>
                     </ul>
                 </div>
-            </div>
-            
-            <div class="card">
-                <div class="experience-item">
-                    <h3>Qualified Medical Administration Personnel (QMAP)</h3>
-                    <p class="date">Assisted Living of Denver LLC, USA (Jan 2023 – Jul 2023)</p>
-                    <ul class="skill-list">
-                        <li>Administered prescribed medications to mental health patients with precision and empathy</li>
-                        <li>Monitored for side effects and maintained comprehensive medical logs</li>
-                        <li>Ensured compliance with U.S. healthcare regulations and safety protocols</li>
+                
+                <!-- Experience 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
+                    <h3 class="text-xl font-semibold text-primary">Qualified Medical Administration Personnel (QMAP)</h3>
+                    <p class="text-gray-600 italic mb-4">Assisted Living of Denver LLC, USA (Jan 2023 – Jul 2023)</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Administered prescribed medications to mental health patients with precision and empathy</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Monitored for side effects and maintained comprehensive medical logs</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Ensured compliance with U.S. healthcare regulations and safety protocols</span>
+                        </li>
                     </ul>
                 </div>
-            </div>
-            
-            <div class="card">
-                <div class="experience-item">
-                    <h3>B2B Account Manager</h3>
-                    <p class="date">Rumah.com (AllProperty Media), Jakarta (Apr 2017 – Nov 2018)</p>
-                    <ul class="skill-list">
-                        <li>Consistently surpassed sales targets: Q1 2018 (130%), H2 2018 (146%)</li>
-                        <li>Built and maintained relationships with top property developers</li>
+                
+                <!-- Experience 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
+                    <h3 class="text-xl font-semibold text-primary">B2B Account Manager</h3>
+                    <p class="text-gray-600 italic mb-4">Rumah.com (AllProperty Media), Jakarta (Apr 2017 – Nov 2018)</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Consistently surpassed sales targets: Q1 2018 (130%), H2 2018 (146%)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Built and maintained relationships with top property developers</span>
+                        </li>
                     </ul>
                 </div>
-            </div>
-            
-            <div class="card">
-                <div class="experience-item">
-                    <h3>SME Relationship Manager</h3>
-                    <p class="date">PT Bank Permata Tbk (Mar 2015 – Apr 2017)</p>
-                    <ul class="skill-list">
-                        <li>Managed SME loan portfolios worth up to IDR 40 billion; achieved 80% of annual targets in 2016</li>
-                        <li>Provided tailored financial products and services for business clients</li>
+                
+                <!-- Experience 4 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
+                    <h3 class="text-xl font-semibold text-primary">SME Relationship Manager</h3>
+                    <p class="text-gray-600 italic mb-4">PT Bank Permata Tbk (Mar 2015 – Apr 2017)</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Managed SME loan portfolios worth up to IDR 40 billion; achieved 80% of annual targets in 2016</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Provided tailored financial products and services for business clients</span>
+                        </li>
                     </ul>
                 </div>
-            </div>
-            
-            <div class="card">
-                <div class="experience-item">
-                    <h3>Commercial Banking RM</h3>
-                    <p class="date">PT Bank Mega Tbk (Jul 2011 – Mar 2015)</p>
-                    <ul class="skill-list">
-                        <li>Oversaw corporate credit portfolios up to IDR 50 billion</li>
-                        <li>Met 100% of 2015 lending targets, providing risk analysis and customized lending solutions</li>
+                
+                <!-- Experience 5 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
+                    <h3 class="text-xl font-semibold text-primary">Commercial Banking RM</h3>
+                    <p class="text-gray-600 italic mb-4">PT Bank Mega Tbk (Jul 2011 – Mar 2015)</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Oversaw corporate credit portfolios up to IDR 50 billion</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Met 100% of 2015 lending targets, providing risk analysis and customized lending solutions</span>
+                        </li>
                     </ul>
                 </div>
-            </div>
-            
-            <div class="card">
-                <div class="experience-item">
-                    <h3>Accounting Oracle Officer</h3>
-                    <p class="date">PT Surya Madistrindo (Jan 2011 – Apr 2011)</p>
-                    <ul class="skill-list">
-                        <li>Trained finance teams in Oracle modules, supported reconciliation and period closing</li>
+                
+                <!-- Experience 6 -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
+                    <h3 class="text-xl font-semibold text-primary">Accounting Oracle Officer</h3>
+                    <p class="text-gray-600 italic mb-4">PT Surya Madistrindo (Jan 2011 – Apr 2011)</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
+                            <span>Trained finance teams in Oracle modules, supported reconciliation and period closing</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -463,33 +218,68 @@
     </section>
 
     <!-- Education & Certifications -->
-    <section class="education-certs">
-        <div class="container">
-            <div class="section-title">
-                <h2>Education & Certifications</h2>
-            </div>
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 relative pb-3 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-accent">
+                Education & Certifications
+            </h2>
             
-            <div class="edu-certs-grid">
-                <div class="card">
-                    <h3>Education</h3>
-                    <ul class="skill-list">
-                        <li><strong>Bachelor of Economics (Marketing Management)</strong><br>University of Indonesia – GPA 3.32 (2007–2010)</li>
-                        <li><strong>Diploma in Accounting</strong><br>University of Indonesia – GPA 2.74 (2003–2007)</li>
-                    </ul>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Education -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md animate-fade-in">
+                    <h3 class="text-xl font-semibold mb-4 text-primary border-b pb-2">Education</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Bachelor of Economics (Marketing Management)</h4>
+                            <p class="text-gray-600">University of Indonesia – GPA 3.32 (2007–2010)</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Diploma in Accounting</h4>
+                            <p class="text-gray-600">University of Indonesia – GPA 2.74 (2003–2007)</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="card">
-                    <h3>Certifications</h3>
-                    <ul class="skill-list">
-                        <li>Google Analytics Certification – Skillshop (2025)</li>
-                        <li>Qualified Medication Administration Personnel – Colorado Health Training (2023)</li>
-                        <li>Heartsaver First Aid, CPR & AED – American Heart Association (2023)</li>
-                        <li>Food Handler – State of Colorado (2023)</li>
-                        <li>Digital Marketing & Social Media – PropertyGuru (2017)</li>
-                        <li>Presentation Essentials – PropertyGuru (2017)</li>
-                        <li>Emotional Intelligence – PropertyGuru (2017)</li>
-                        <li>Commercial Credit Training Program – Bank Mega (2014)</li>
-                        <li>Trade Finance Officer Training – Bank Mega (2011)</li>
+                <!-- Certifications -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-md animate-fade-in">
+                    <h3 class="text-xl font-semibold mb-4 text-primary border-b pb-2">Certifications</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-accent mr-2"></i>
+                            <span>Google Analytics Certification – Skillshop (2025)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-accent mr-2"></i>
+                            <span>Qualified Medication Administration Personnel – Colorado Health Training (2023)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-accent mr-2"></i>
+                            <span>Heartsaver First Aid, CPR & AED – American Heart Association (2023)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-accent mr-2"></i>
+                            <span>Food Handler – State of Colorado (2023)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-accent mr-2"></i>
+                            <span>Digital Marketing & Social Media – PropertyGuru (2017)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-accent mr-2"></i>
+                            <span>Presentation Essentials – PropertyGuru (2017)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-accent mr-2"></i>
+                            <span>Emotional Intelligence – PropertyGuru (2017)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-accent mr-2"></i>
+                            <span>Commercial Credit Training Program – Bank Mega (2014)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-certificate text-accent mr-2"></i>
+                            <span>Trade Finance Officer Training – Bank Mega (2011)</span>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -497,67 +287,53 @@
     </section>
 
     <!-- Additional Activities -->
-    <section>
-        <div class="container">
-            <div class="section-title">
-                <h2>Additional Activities & Leadership</h2>
-            </div>
-            <div class="card">
-                <ul class="skill-list">
-                    <li>Founded and managed a sheep farming business using university grant capital (2010)</li>
-                    <li>Aikido Instructor – Student Martial Arts Unit, University of Indonesia (2009–2015)</li>
-                    <li>External Relations, Faculty Student Council – FEUI (2005–2006)</li>
-                    <li>General Secretary – Ikatan Remaja Cempaka Hijau (2003–2004)</li>
+    <section class="py-12 md:py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 relative pb-3 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-accent">
+                Additional Activities & Leadership
+            </h2>
+            <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md animate-fade-in">
+                <ul class="space-y-2">
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-accent mt-1 mr-2"></i>
+                        <span>Founded and managed a sheep farming business using university grant capital (2010)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-accent mt-1 mr-2"></i>
+                        <span>Aikido Instructor – Student Martial Arts Unit, University of Indonesia (2009–2015)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-accent mt-1 mr-2"></i>
+                        <span>External Relations, Faculty Student Council – FEUI (2005–2006)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-accent mt-1 mr-2"></i>
+                        <span>General Secretary – Ikatan Remaja Cempaka Hijau (2003–2004)</span>
+                    </li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-   <!-- <section>
-        <div class="container">
-            <div class="section-title">
-                <h2>Services Offered</h2>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Website Services</h3>
-                    <ul class="skill-list">
-                        <li>Providing services to assist micro, small, and medium enterprises (MSMEs) in penetrating the digital world</li>
-                        <li>Professional web design with fresh & modern concepts</li>
-                    </ul>
-                </div>
-                
-                <div class="skill-category">
-                    <h3>Social Media Management</h3>
-                    <ul class="skill-list">
-                        <li>Create plan, design and copy writing to produce consistent and targeted content</li>
-                        <li>Attract attention and increase interaction with the audience</li>
-                    </ul>
-                </div>
-                
-                <div class="skill-category">
-                    <h3>Research & Trade</h3>
-                    <ul class="skill-list">
-                        <li>Product research using tool apps in local online marketplaces (Shopee, Tokopedia)</li>
-                        <li>International trade - finding best suppliers and arranging shipments</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
--->
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <h3>Get In Touch</h3>
-            <p>Feel free to reach out for collaborations or opportunities</p>
+    <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-2xl font-semibold mb-6">Get In Touch</h3>
+            <p class="max-w-2xl mx-auto mb-8">Feel free to reach out for collaborations or opportunities. I'm always open to discussing new projects and ideas.</p>
             
-            <div class="social-links">
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="text-white text-2xl hover:text-accent transition-colors duration-300">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="text-white text-2xl hover:text-accent transition-colors duration-300">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-white text-2xl hover:text-accent transition-colors duration-300">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="text-white text-2xl hover:text-accent transition-colors duration-300">
+                    <i class="fab fa-facebook"></i>
+                </a>
             </div>
             
             <p>© 2023 Prama Danawira. All Rights Reserved.</p>
@@ -567,33 +343,14 @@
     <script>
         // Simple animation for page elements
         document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.card');
-            const headers = document.querySelectorAll('h2');
+            const animateElements = document.querySelectorAll('.animate-fade-in');
             
-            // Animate elements on page load
-            setTimeout(() => {
-                headers.forEach(header => {
-                    header.style.opacity = 1;
-                    header.style.transform = 'translateY(0)';
-                });
-                
-                cards.forEach(card => {
-                    card.style.opacity = 1;
-                    card.style.transform = 'translateY(0)';
-                });
-            }, 300);
-            
-            // Add initial styles for animation
-            headers.forEach(header => {
-                header.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                header.style.opacity = 0;
-                header.style.transform = 'translateY(20px)';
-            });
-            
-            cards.forEach(card => {
-                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                card.style.opacity = 0;
-                card.style.transform = 'translateY(20px)';
+            animateElements.forEach((element, index) => {
+                element.style.opacity = 0;
+                setTimeout(() => {
+                    element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    element.style.opacity = 1;
+                }, 100 + (index * 100));
             });
         });
     </script>
