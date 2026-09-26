@@ -1,284 +1,552 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prama Danawira - Marketing & Project Management Professional</title>
-    <!-- Tailwind CSS via CDN -->
+    <title>Prama Danawira | Performance Marketing & Automation Specialist</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons (Modern & Clean Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
                     colors: {
-                        primary: '#2c3e50',
-                        secondary: '#34495e',
-                        accent: '#7f8c8d',
-                        light: '#ecf0f1',
-                        dark: '#2c3e50',
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .gradient-text { background: linear-gradient(135deg, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
+        /* Card Hover Effects */
+        .hover-card { transition: all 0.3s ease; }
+        .hover-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
         
-        /* Custom animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* Timeline */
+        .timeline-line { position: absolute; left: 11px; top: 0; bottom: 0; width: 2px; background-color: #e2e8f0; }
         
-        .animate-fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
+        /* Hide ID language by default */
+        .lang-id { display: none; }
+        html[lang="id"] .lang-id { display: block; }
+        html[lang="id"] .lang-en { display: none; }
         
-        /* Progress bar animation */
-        .progress-bar {
-            transition: width 1.5s ease-in-out;
-        }
+        /* Exception for inline elements */
+        html[lang="id"] span.lang-id { display: inline; }
+        html[lang="id"] span.lang-en { display: none; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <!-- Header Section -->
-    <header class="bg-gradient-to-r from-primary to-secondary text-white py-16 md:py-20">
-        <div class="container mx-auto px-4 text-center">
-            <div class="animate-fade-in">
-                <img src="https://danawiraprama.github.io/Resume/ResumePrama.avif" alt="Prama Danawira" 
-                     class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white border-opacity-20 shadow-lg mx-auto mb-6">
-                <h1 class="text-3xl md:text-4xl font-bold mb-4">Prama Danawira</h1>
-                <p class="text-lg md:text-xl mb-8">Marketing & Project Management Professional</p>
-                
-                <div class="flex flex-wrap justify-center gap-3 mb-8">
-                    <div class="flex items-center bg-white bg-opacity-10 px-4 py-2 rounded-full">
-                        <i class="fas fa-map-marker-alt mr-2"></i>
-                        <span>Jakarta, Indonesia</span>
-                    </div>
-                    <div class="flex items-center bg-white bg-opacity-10 px-4 py-2 rounded-full">
-                        <i class="fas fa-envelope mr-2"></i>
-                        <span>prama.danawira@gmail.com</span>
-                    </div>
-                    <div class="flex items-center bg-white bg-opacity-10 px-4 py-2 rounded-full">
-                        <i class="fas fa-phone mr-2"></i>
-                        <span>+62 812-8494-2940</span>
-                    </div>
-                </div>
-                
-                <a href="https://danawiraprama.github.io/Resume/Prama_Danawira_Resume.pdf" 
-                   class="bg-white text-primary px-6 py-3 rounded-full font-semibold inline-flex items-center hover:bg-opacity-90 transition-all duration-300 shadow-md">
-                    <i class="fas fa-download mr-2"></i> Download Resume (PDF)
+<body class="text-slate-800 antialiased selection:bg-brand-200 selection:text-brand-900">
+
+    <!-- Navigation -->
+    <nav class="glass-nav fixed w-full z-50 top-0 border-b border-slate-200 shadow-sm transition-all py-3">
+        <div class="container mx-auto px-6 max-w-6xl flex justify-between items-center">
+            <a href="#" class="font-bold text-xl tracking-tight text-brand-900">
+                Prama<span class="text-brand-500">.</span>
+            </a>
+            
+            <div class="flex items-center gap-4">
+                <!-- Language Toggle -->
+                <button id="langToggle" class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-full text-sm font-medium transition-colors text-slate-700">
+                    <span id="flagIcon">🇮🇩</span> 
+                    <span id="btnText">ID</span>
+                </button>
+                <a href="#contact" class="hidden md:inline-flex bg-brand-600 hover:bg-brand-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition-colors shadow-md hover:shadow-lg">
+                    <span class="lang-en">Hire Me</span>
+                    <span class="lang-id">Rekrut Saya</span>
                 </a>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- Professional Summary -->
-    <section class="py-12 md:py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 relative pb-3 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-accent">
-                Professional Summary
-            </h2>
-            <div class="max-w-3xl mx-auto bg-gray-50 p-6 md:p-8 rounded-lg shadow-md border-l-4 border-accent animate-fade-in">
-                <p class="text-gray-700 leading-relaxed">
-                    Results-driven marketing and project management professional with over a decade of experience across industries including public relations, healthcare, banking, and real estate. Adept in developing strategies that boost brand visibility, generate revenue, and foster client retention. Strong communicator and collaborator with international exposure, especially in the U.S. healthcare environment. Holds a Bachelor's degree in Marketing Economics and multiple industry-recognized certifications.
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6">
+        <div class="container mx-auto max-w-6xl flex flex-col-reverse md:flex-row items-center gap-12">
+            <div class="w-full md:w-3/5 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 text-brand-600 text-xs font-bold mb-6 border border-brand-100 tracking-wide uppercase">
+                    <i class="ph ph-chart-line-up text-lg"></i>
+                    <span class="lang-en">Available for Freelance & Consultation</span>
+                    <span class="lang-id">Tersedia untuk Freelance & Konsultasi</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 text-slate-900">
+                    <span class="lang-en">Scaling Revenue through <span class="gradient-text">Data & Automation.</span></span>
+                    <span class="lang-id">Menskalakan Pendapatan via <span class="gradient-text">Data & Otomasi.</span></span>
+                </h1>
+                
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-2xl mx-auto md:mx-0">
+                    <span class="lang-en">I am a <strong>Performance Marketing & Automation Specialist</strong> blending 13+ years of commercial expertise with advanced Data Science (Python/SQL) and workflow automation to engineer Meta Ads ecosystems that scale businesses profitably.</span>
+                    <span class="lang-id">Saya adalah <strong>Spesialis Performance Marketing & Otomasi</strong> yang memadukan 13+ tahun pengalaman dengan Data Science (Python/SQL) dan otomasi alur kerja untuk merancang ekosistem Meta Ads yang menskalakan bisnis Anda secara menguntungkan.</span>
+                </p>
+                
+                <div class="flex flex-wrap flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#portfolio" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-3.5 rounded-full font-semibold transition-all shadow-lg hover:shadow-brand-500/30 flex items-center justify-center gap-2">
+                        <i class="ph ph-briefcase text-xl"></i>
+                        <span class="lang-en">View Portfolio</span>
+                        <span class="lang-id">Lihat Portofolio</span>
+                    </a>
+                    <a href="images/Resume_Prama_Danawira.pdf" download target="_blank" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-8 py-3.5 rounded-full font-semibold transition-all shadow-sm flex items-center justify-center gap-2">
+                        <i class="ph ph-download-simple text-xl text-brand-600"></i>
+                        <span class="lang-en">Download CV</span>
+                        <span class="lang-id">Unduh CV</span>
+                    </a>
+                    <a href="https://wa.me/6281284942940" target="_blank" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 px-8 py-3.5 rounded-full font-semibold transition-all shadow-sm flex items-center justify-center gap-2">
+                        <i class="ph ph-whatsapp-logo text-xl text-green-500"></i>
+                        <span>WhatsApp Me</span>
+                    </a>
+                </div>
+                
+                <!-- Quick Contact -->
+                <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-6 text-sm text-slate-500 font-medium">
+                    <a href="mailto:prama.danawira@gmail.com" class="hover:text-brand-600 flex items-center gap-1.5"><i class="ph ph-envelope-simple text-lg"></i> prama.danawira@gmail.com</a>
+                    <span class="flex items-center gap-1.5"><i class="ph ph-map-pin text-lg"></i> South Tangerang, Indonesia</span>
+                </div>
+            </div>
+            
+            <div class="w-full md:w-2/5 flex justify-center">
+                <div class="relative">
+                    <!-- Decorative blobs behind image -->
+                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-400 to-indigo-400 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+                    <img src="images/foto resume prama.png" onerror="this.src='https://ui-avatars.com/api/?name=Prama+Danawira&background=1e3a8a&color=fff&size=400'" alt="Prama Danawira" class="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-white shadow-2xl z-10">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlight Stats -->
+    <section class="border-y border-slate-200 bg-white py-10">
+        <div class="container mx-auto max-w-6xl px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-100">
+                <div>
+                    <h3 class="text-3xl font-extrabold text-brand-600 mb-1">709%</h3>
+                    <p class="text-sm font-medium text-slate-500 uppercase tracking-wide">
+                        <span class="lang-en">Ad Spend Scaled</span>
+                        <span class="lang-id">Skala Anggaran Iklan</span>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-extrabold text-brand-600 mb-1">46%</h3>
+                    <p class="text-sm font-medium text-slate-500 uppercase tracking-wide">
+                        <span class="lang-en">CPL Reduction</span>
+                        <span class="lang-id">Penurunan Biaya/Prospek</span>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-extrabold text-brand-600 mb-1">70+</h3>
+                    <p class="text-sm font-medium text-slate-500 uppercase tracking-wide">
+                        <span class="lang-en">Clients Managed</span>
+                        <span class="lang-id">Klien Ditangani</span>
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-extrabold text-brand-600 mb-1">13+</h3>
+                    <p class="text-sm font-medium text-slate-500 uppercase tracking-wide">
+                        <span class="lang-en">Years Experience</span>
+                        <span class="lang-id">Tahun Pengalaman</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Skills -->
+    <section class="py-20 px-6 bg-slate-50">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-900">
+                    <span class="lang-en">Technical <span class="text-brand-600">Arsenal</span></span>
+                    <span class="lang-id">Keahlian <span class="text-brand-600">Teknis</span></span>
+                </h2>
+                <p class="mt-4 text-slate-600 max-w-2xl mx-auto">
+                    <span class="lang-en">The tools and methodologies I use to turn advertising budgets into measurable ROI and automated pipelines.</span>
+                    <span class="lang-id">Alat dan metodologi yang saya gunakan untuk mengubah anggaran iklan menjadi ROI yang terukur dan alur kerja otomatis.</span>
                 </p>
             </div>
-        </div>
-    </section>
 
-    <!-- Experience Section -->
-    <section class="py-12 md:py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 relative pb-3 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-accent">
-                Professional Experience
-            </h2>
-            
-            <div class="space-y-6 max-w-4xl mx-auto">
-                <!-- Experience 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
-                    <h3 class="text-xl font-semibold text-primary">Project Manager</h3>
-                    <p class="text-gray-600 italic mb-4">Contentro dot com, Jakarta (Nov 2018 – NOW)</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Developed a new Lead Generation Campaign product, increasing company revenue by 15%</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Led production of 200+ media releases annually and contributed to 4,000+ published articles</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Secured coverage in 280+ media outlets, strengthening brand awareness for major clients</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Managed content development for websites, blogs, social media, and newsletters</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Supervised digital event execution and ensured alignment with clients' brand goals</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Clients included Toyota, Bukalapak, Tempo Media Group, Jakarta Intercultural School, and various SOEs</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Experience 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
-                    <h3 class="text-xl font-semibold text-primary">Qualified Medical Administration Personnel (QMAP)</h3>
-                    <p class="text-gray-600 italic mb-4">Assisted Living of Denver LLC, USA (Jan 2023 – Jul 2023)</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Administered prescribed medications to mental health patients with precision and empathy</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Monitored for side effects and maintained comprehensive medical logs</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Ensured compliance with U.S. healthcare regulations and safety protocols</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Experience 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
-                    <h3 class="text-xl font-semibold text-primary">B2B Account Manager</h3>
-                    <p class="text-gray-600 italic mb-4">Rumah.com (AllProperty Media), Jakarta (Apr 2017 – Nov 2018)</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Consistently surpassed sales targets: Q1 2018 (130%), H2 2018 (146%)</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Built and maintained relationships with top property developers</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Experience 4 -->
-                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
-                    <h3 class="text-xl font-semibold text-primary">SME Relationship Manager</h3>
-                    <p class="text-gray-600 italic mb-4">PT Bank Permata Tbk (Mar 2015 – Apr 2017)</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Managed SME loan portfolios worth up to IDR 40 billion; achieved 80% of annual targets in 2016</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Provided tailored financial products and services for business clients</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Experience 5 -->
-                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
-                    <h3 class="text-xl font-semibold text-primary">Commercial Banking RM</h3>
-                    <p class="text-gray-600 italic mb-4">PT Bank Mega Tbk (Jul 2011 – Mar 2015)</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Oversaw corporate credit portfolios up to IDR 50 billion</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Met 100% of 2015 lending targets, providing risk analysis and customized lending solutions</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Experience 6 -->
-                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary animate-fade-in">
-                    <h3 class="text-xl font-semibold text-primary">Accounting Oracle Officer</h3>
-                    <p class="text-gray-600 italic mb-4">PT Surya Madistrindo (Jan 2011 – Apr 2011)</p>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-arrow-right text-accent mt-1 mr-2"></i>
-                            <span>Trained finance teams in Oracle modules, supported reconciliation and period closing</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education & Certifications -->
-    <section class="py-12 md:py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 relative pb-3 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-accent">
-                Education & Certifications
-            </h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <!-- Education -->
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md animate-fade-in">
-                    <h3 class="text-xl font-semibold mb-4 text-primary border-b pb-2">Education</h3>
+            <div class="grid md:grid-cols-2 gap-10">
+                <!-- Marketing Skills -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-card">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center">
+                            <i class="ph ph-megaphone text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800">
+                            <span class="lang-en">Marketing & Automation</span>
+                            <span class="lang-id">Pemasaran & Otomasi</span>
+                        </h3>
+                    </div>
+                    
                     <div class="space-y-4">
                         <div>
-                            <h4 class="font-semibold">Bachelor of Economics (Marketing Management)</h4>
-                            <p class="text-gray-600">University of Indonesia – GPA 3.32 (2007–2010)</p>
+                            <p class="text-sm font-semibold text-slate-700 mb-2">Meta Ads & Paid Acquisition</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">CBO/ABO Structures</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Advantage+</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Creative Testing</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Full-Funnel Strategy</span>
+                            </div>
                         </div>
                         <div>
-                            <h4 class="font-semibold">Diploma in Accounting</h4>
-                            <p class="text-gray-600">University of Indonesia – GPA 2.74 (2003–2007)</p>
+                            <p class="text-sm font-semibold text-slate-700 mb-2">CRM & Automation Stack</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-orange-50 text-orange-700 font-medium rounded-md text-sm">Make.com</span>
+                                <span class="px-3 py-1 bg-orange-50 text-orange-700 font-medium rounded-md text-sm">Systeme.io</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">WhatsApp API (WABA)</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Kommo & Privyr</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-slate-700 mb-2">Lead Gen Funnels</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">7-Day Drip Sequences</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Speed-to-Lead CRO</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">CTWA Campaigns</span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Data Science Skills -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover-card">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
+                            <i class="ph ph-database text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800">
+                            <span class="lang-en">Data Science & Analytics</span>
+                            <span class="lang-id">Data Science & Analitik</span>
+                        </h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm font-semibold text-slate-700 mb-2">Programming & DB</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-indigo-50 text-indigo-700 font-medium rounded-md text-sm">Python</span>
+                                <span class="px-3 py-1 bg-indigo-50 text-indigo-700 font-medium rounded-md text-sm">SQL (PostgreSQL/MySQL)</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-slate-700 mb-2">Libraries & Machine Learning</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Pandas</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">NumPy</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Scikit-learn</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Matplotlib & Seaborn</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-slate-700 mb-2">Visualization & Tracking</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">GA4</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Meta Pixel / CAPI Audits</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Tableau</span>
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md text-sm">Looker Studio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Projects -->
+    <section id="portfolio" class="py-20 px-6 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex justify-between items-end mb-12 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900">
+                        <span class="lang-en">Featured <span class="text-brand-600">Projects</span></span>
+                        <span class="lang-id">Proyek <span class="text-brand-600">Unggulan</span></span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1 (Highlighted) -->
+                <a href="https://danawiraprama.github.io/Portfolio/socialListening.html" target="_blank" class="group block relative rounded-2xl overflow-hidden hover-card border border-brand-100 bg-gradient-to-br from-brand-50 to-white p-6 h-full flex flex-col">
+                    <div class="absolute top-4 right-4 bg-brand-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Highlight</div>
+                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-brand-600 mb-4 border border-brand-100 group-hover:scale-110 transition-transform">
+                        <i class="ph ph-ear text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Social Media Listening</h3>
+                    <p class="text-sm text-slate-600 flex-grow mb-6">
+                        <span class="lang-en">Advanced analytics for brand monitoring, sentiment analysis, competitor intelligence & trend detection.</span>
+                        <span class="lang-id">Analisis lanjutan untuk pemantauan merek, analisis sentimen, intelijen kompetitor & deteksi tren.</span>
+                    </p>
+                    <div class="flex items-center text-brand-600 text-sm font-semibold group-hover:gap-2 transition-all">
+                        <span class="lang-en">View Case Study</span>
+                        <span class="lang-id">Lihat Studi Kasus</span>
+                        <i class="ph ph-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Project 2 -->
+                <a href="https://danawiraprama.github.io/Portfolio/agentforproperty.html" target="_blank" class="group block rounded-2xl hover-card border border-slate-200 bg-white p-6 h-full flex flex-col">
+                    <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center text-slate-600 mb-4 group-hover:text-brand-600 transition-colors">
+                        <i class="ph ph-buildings text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Agent for Property</h3>
+                    <p class="text-sm text-slate-500 flex-grow mb-6 font-mono bg-slate-50 p-2 rounded">agentforproperty.html</p>
+                    <div class="flex items-center text-slate-500 text-sm font-semibold group-hover:text-brand-600 transition-colors">
+                        <span>Live Preview</span> <i class="ph ph-arrow-up-right ml-1"></i>
+                    </div>
+                </a>
+
+                <!-- Project 3 -->
+                <a href="https://danawiraprama.github.io/Portfolio/agentforumrah.html" target="_blank" class="group block rounded-2xl hover-card border border-slate-200 bg-white p-6 h-full flex flex-col">
+                    <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center text-slate-600 mb-4 group-hover:text-brand-600 transition-colors">
+                        <i class="ph ph-airplane-tilt text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Agent for Umrah</h3>
+                    <p class="text-sm text-slate-500 flex-grow mb-6 font-mono bg-slate-50 p-2 rounded">agentforumrah.html</p>
+                    <div class="flex items-center text-slate-500 text-sm font-semibold group-hover:text-brand-600 transition-colors">
+                        <span>Live Preview</span> <i class="ph ph-arrow-up-right ml-1"></i>
+                    </div>
+                </a>
+
+                <!-- Project 4 -->
+                <a href="https://danawiraprama.github.io/Portfolio/dearazproperty.html" target="_blank" class="group block rounded-2xl hover-card border border-slate-200 bg-white p-6 h-full flex flex-col">
+                    <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center text-slate-600 mb-4 group-hover:text-brand-600 transition-colors">
+                        <i class="ph ph-house-line text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Dearaz Property</h3>
+                    <p class="text-sm text-slate-500 flex-grow mb-6 font-mono bg-slate-50 p-2 rounded">dearazproperty.html</p>
+                    <div class="flex items-center text-slate-500 text-sm font-semibold group-hover:text-brand-600 transition-colors">
+                        <span>Live Preview</span> <i class="ph ph-arrow-up-right ml-1"></i>
+                    </div>
+                </a>
+
+                 <!-- Project 5 -->
+                 <a href="https://danawiraprama.github.io/Portfolio/luxuryproperty.html" target="_blank" class="group block rounded-2xl hover-card border border-slate-200 bg-white p-6 h-full flex flex-col">
+                    <div class="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center text-slate-600 mb-4 group-hover:text-brand-600 transition-colors">
+                        <i class="ph ph-sketch-logo text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Luxury Property</h3>
+                    <p class="text-sm text-slate-500 flex-grow mb-6 font-mono bg-slate-50 p-2 rounded">luxuryproperty.html</p>
+                    <div class="flex items-center text-slate-500 text-sm font-semibold group-hover:text-brand-600 transition-colors">
+                        <span>Live Preview</span> <i class="ph ph-arrow-up-right ml-1"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Experience Timeline -->
+    <section class="py-20 px-6 bg-slate-50">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">
+                <span class="lang-en">Professional <span class="text-brand-600">Journey</span></span>
+                <span class="lang-id">Perjalanan <span class="text-brand-600">Karier</span></span>
+            </h2>
+
+            <div class="relative">
+                <div class="timeline-line"></div>
                 
+                <!-- Experience 1 (LUMI ADVERTISING) -->
+                <div class="relative pl-10 mb-12 group">
+                    <div class="absolute left-[7px] top-1.5 w-2.5 h-2.5 bg-brand-500 rounded-full border-4 border-white shadow ring-2 ring-brand-100 z-10 group-hover:scale-150 transition-transform"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-brand-100 hover:shadow-md transition-shadow">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">Performance Marketing & Automation Specialist (Growth Lead)</h3>
+                                <p class="text-brand-600 font-medium text-sm">Lumi Advertising / Singapore (Remote)</p>
+                            </div>
+                            <span class="inline-block mt-2 md:mt-0 bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1 rounded-full border border-brand-200">May 2026 – Present</span>
+                        </div>
+                        <ul class="lang-en text-slate-600 space-y-3 text-sm leading-relaxed">
+                            <li><strong class="text-slate-800 text-brand-700 bg-brand-50 px-1 rounded">709% Scaled Budget:</strong> Managed $11.75K+ in ad spend across real estate accounts, boosting lead volume by 1,240% (from 10 to 134 leads/mo).</li>
+                            <li><strong class="text-slate-800">Meta Ads Optimization:</strong> Generated 220 high-intent leads and slashed Cost Per Lead (CPL) by 46.1%, converting account health to 100% Green.</li>
+                            <li><strong class="text-slate-800">Advanced Nurturing Engines:</strong> Designed dual-channel lead nurturing using systeme.io and 7-day automated WhatsApp workflows via Make.com, WABA, and Privyr.</li>
+                            <li><strong class="text-slate-800">Conversion Impact:</strong> Achieved a 55.9% response rate and up to 41% Lead-to-Booked Appointment conversion.</li>
+                        </ul>
+                        <ul class="lang-id text-slate-600 space-y-3 text-sm leading-relaxed">
+                            <li><strong class="text-slate-800 text-brand-700 bg-brand-50 px-1 rounded">Skala 709%:</strong> Mengelola pengeluaran iklan $11.75K+ untuk akun real estate, meningkatkan volume prospek hingga 1,240% (dari 10 mjd 134 leads/bln).</li>
+                            <li><strong class="text-slate-800">Optimasi Meta Ads:</strong> Menghasilkan 220 leads potensial dan memangkas CPL sebesar 46.1%, mengembalikan performa akun ke status 100% Hijau.</li>
+                            <li><strong class="text-slate-800">Otomasi Alur Kerja:</strong> Merancang mesin *nurturing* menggunakan systeme.io dan WhatsApp otomatis (Make.com, WABA, Privyr).</li>
+                            <li><strong class="text-slate-800">Dampak Konversi:</strong> Mencapai tingkat respons 55.9% dan konversi Lead-ke-Booking Appointment hingga 41%.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience 2 (CONSULTANT) -->
+                <div class="relative pl-10 mb-12 group">
+                    <div class="absolute left-[7px] top-1.5 w-2.5 h-2.5 bg-slate-400 rounded-full border-4 border-white shadow ring-2 ring-slate-100 z-10 group-hover:bg-brand-500 transition-colors"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">Performance Marketing & Growth Consultant</h3>
+                                <p class="text-brand-600 font-medium text-sm">Self-Employed / Global (Remote)</p>
+                            </div>
+                            <span class="inline-block mt-2 md:mt-0 bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">Jul 2024 – Present</span>
+                        </div>
+                        <ul class="lang-en text-slate-600 space-y-3 text-sm leading-relaxed">
+                            <li><strong class="text-slate-800">Multi-Sector Execution:</strong> Architected conversion-focused Meta Ads campaigns across Real Estate (ID), Travel (ID), and Wellness (Germany/SG).</li>
+                            <li><strong class="text-slate-800">Data Analytics:</strong> Utilized Python (Pandas/Matplotlib) and SQL for deep performance diagnostics, tracking pixel audits (Meta CAPI), and safeguarding budget efficiency.</li>
+                            <li><strong class="text-slate-800">Tech Stack Integration:</strong> Connected Meta Lead Ads with CRM systems and automation tools (Kommo, GA4) to streamline lead distribution.</li>
+                        </ul>
+                        <ul class="lang-id text-slate-600 space-y-3 text-sm leading-relaxed">
+                            <li><strong class="text-slate-800">Eksekusi Multi-Sektor:</strong> Merancang kampanye Meta Ads untuk konversi di sektor Real Estate (ID), Perjalanan (ID), dan Wellness (Jerman/SG).</li>
+                            <li><strong class="text-slate-800">Analitik Data:</strong> Menggunakan Python dan SQL untuk diagnostik kinerja mendalam, audit piksel (CAPI), dan perlindungan efisiensi anggaran.</li>
+                            <li><strong class="text-slate-800">Integrasi Teknologi:</strong> Menghubungkan Meta Lead Ads dengan sistem CRM (Kommo, GA4) untuk mempercepat distribusi prospek.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience 3 (CONTENTRO) -->
+                <div class="relative pl-10 mb-12 group">
+                    <div class="absolute left-[7px] top-1.5 w-2.5 h-2.5 bg-slate-300 rounded-full border-4 border-white shadow ring-2 ring-slate-100 z-10 group-hover:bg-brand-500 transition-colors"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">Project Marketing Manager</h3>
+                                <p class="text-brand-600 font-medium text-sm">Contentro dot com / Jakarta</p>
+                            </div>
+                            <span class="inline-block mt-2 md:mt-0 bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">Nov 2018 – Jul 2024</span>
+                        </div>
+                        <ul class="lang-en text-slate-600 space-y-3 text-sm leading-relaxed">
+                            <li><strong class="text-slate-800 text-green-600 bg-green-50 px-1 rounded">+15% Revenue:</strong> Developed and launched a new 'Leads Generation Campaign' product that directly boosted company top-line.</li>
+                            <li><strong class="text-slate-800">Massive Scale:</strong> Handled 70+ clients (Toyota, Bukalapak, Tempo Media) across B2B/B2C sectors.</li>
+                            <li><strong class="text-slate-800">Media Dominance:</strong> Led 200+ media releases annually, securing coverage in 280+ outlets and contributing to 4,000+ published articles yearly.</li>
+                        </ul>
+                        <ul class="lang-id text-slate-600 space-y-3 text-sm leading-relaxed">
+                            <li><strong class="text-slate-800 text-green-600 bg-green-50 px-1 rounded">+15% Pendapatan:</strong> Mengembangkan produk 'Kampanye Lead Generation' yang langsung meningkatkan pendapatan perusahaan.</li>
+                            <li><strong class="text-slate-800">Skala Masif:</strong> Menangani 70+ klien (Toyota, Bukalapak, Tempo Media) di sektor B2B/B2C.</li>
+                            <li><strong class="text-slate-800">Dominasi Media:</strong> Memimpin 200+ rilis media per tahun, masuk di 280+ outlet media, berkontribusi pada 4.000+ artikel per tahun.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Experience 4 (RUMAH.COM) -->
+                <div class="relative pl-10 mb-12 group">
+                    <div class="absolute left-[7px] top-1.5 w-2.5 h-2.5 bg-slate-300 rounded-full border-4 border-white shadow ring-2 ring-slate-100 z-10 group-hover:bg-brand-500 transition-colors"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900">B2B Account Manager</h3>
+                                <p class="text-brand-600 font-medium text-sm">PT AllProperty Media (Rumah.com)</p>
+                            </div>
+                            <span class="inline-block mt-2 md:mt-0 bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">Apr 2017 – Nov 2018</span>
+                        </div>
+                        <ul class="lang-en text-slate-600 space-y-2 text-sm leading-relaxed">
+                            <li><strong class="text-slate-800 text-green-600 bg-green-50 px-1 rounded">146% Quota:</strong> Achieved 146% of sales target by consistently exceeding quarterly goals.</li>
+                            <li>Utilized social media monitoring to prospect high-value clients in the real estate sector.</li>
+                        </ul>
+                        <ul class="lang-id text-slate-600 space-y-2 text-sm leading-relaxed">
+                            <li><strong class="text-slate-800 text-green-600 bg-green-50 px-1 rounded">Kuota 146%:</strong> Mencapai 146% dari target penjualan kuartalan secara konsisten.</li>
+                            <li>Menggunakan pemantauan media sosial untuk mencari prospek klien bernilai tinggi di sektor properti.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                 <!-- Banking Experience Summarized -->
+                 <div class="relative pl-10 group">
+                    <div class="absolute left-[7px] top-1.5 w-2.5 h-2.5 bg-slate-300 rounded-full border-4 border-white shadow ring-2 ring-slate-100 z-10"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h4 class="font-semibold text-slate-800 mb-2">
+                            <span class="lang-en">Previous Corporate Banking Roles</span>
+                            <span class="lang-id">Pengalaman Perbankan Korporasi Sebelumnya</span>
+                        </h4>
+                        <div class="text-sm text-slate-600 space-y-2">
+                            <p><strong>RM SME @ PT Bank Permata, Tbk</strong> (2015-2017) <br>
+                               <span class="text-xs italic text-slate-500">Achieved 80% of IDR 40 Bio target in 2016.</span></p>
+                            <p><strong>Commercial Banking RM @ PT Bank Mega, Tbk</strong> (2011-2015) <br>
+                               <span class="text-xs italic text-slate-500">Managed IDR 50 Bio credit limits, achieved 100% target in 2015.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Certs -->
+    <section class="py-16 px-6 bg-white border-t border-slate-200">
+        <div class="container mx-auto max-w-6xl">
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Education -->
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                        <i class="ph ph-graduation-cap text-brand-600"></i>
+                        <span class="lang-en">Education</span>
+                        <span class="lang-id">Pendidikan</span>
+                    </h2>
+                    <div class="space-y-6 relative border-l-2 border-slate-100 pl-4 ml-2">
+                        <div class="relative">
+                            <div class="absolute -left-[21px] top-1.5 w-3 h-3 bg-brand-200 rounded-full border-2 border-white"></div>
+                            <h4 class="font-bold text-slate-800 text-lg">University of Indonesia</h4>
+                            <p class="text-brand-600 font-medium text-sm">
+                                <span class="lang-en">Bachelor's in Economics Marketing Management</span>
+                                <span class="lang-id">S1 Manajemen Pemasaran Ekonomi</span>
+                            </p>
+                            <p class="text-slate-500 text-xs mt-1">2007 – 2010 • GPA 3.32</p>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[21px] top-1.5 w-3 h-3 bg-slate-200 rounded-full border-2 border-white"></div>
+                            <h4 class="font-bold text-slate-800 text-lg">University of Indonesia</h4>
+                            <p class="text-slate-600 font-medium text-sm">
+                                <span class="lang-en">Diploma in Economics Accounting</span>
+                                <span class="lang-id">D3 Akuntansi Ekonomi</span>
+                            </p>
+                            <p class="text-slate-500 text-xs mt-1">2003 – 2007</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Certifications -->
-                <div class="bg-gray-50 p-6 rounded-lg shadow-md animate-fade-in">
-                    <h3 class="text-xl font-semibold mb-4 text-primary border-b pb-2">Certifications</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center">
-                            <i class="fas fa-certificate text-accent mr-2"></i>
-                            <span>Google Analytics Certification – Skillshop (2025)</span>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                        <i class="ph ph-certificate text-brand-600"></i>
+                        <span class="lang-en">Key Certifications</span>
+                        <span class="lang-id">Sertifikasi Utama</span>
+                    </h2>
+                    <ul class="space-y-3">
+                        <li class="flex gap-3 bg-slate-50 p-3 rounded-lg border border-brand-200 shadow-sm relative overflow-hidden">
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-500"></div>
+                            <div class="text-brand-600 mt-0.5"><i class="ph ph-medal weight-fill text-lg"></i></div>
+                            <div>
+                                <p class="font-bold text-sm text-brand-900">Applied Data Science Capstone</p>
+                                <p class="text-xs text-brand-700 font-medium">IBM (Issued May 2026)</p>
+                            </div>
                         </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-certificate text-accent mr-2"></i>
-                            <span>Qualified Medication Administration Personnel – Colorado Health Training (2023)</span>
+                        <li class="flex gap-3 bg-slate-50 p-3 rounded-lg border border-brand-200 shadow-sm relative overflow-hidden">
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-500"></div>
+                            <div class="text-brand-600 mt-0.5"><i class="ph ph-medal weight-fill text-lg"></i></div>
+                            <div>
+                                <p class="font-bold text-sm text-brand-900">Machine Learning with Python</p>
+                                <p class="text-xs text-brand-700 font-medium">IBM (Issued Feb 2026)</p>
+                            </div>
                         </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-certificate text-accent mr-2"></i>
-                            <span>Heartsaver First Aid, CPR & AED – American Heart Association (2023)</span>
+                        <li class="flex gap-3 bg-white p-3 rounded-lg border border-slate-100">
+                            <div class="text-brand-600 mt-0.5"><i class="ph ph-check-circle weight-fill"></i></div>
+                            <div>
+                                <p class="font-semibold text-sm text-slate-800">Google Analytics Certification</p>
+                                <p class="text-xs text-slate-500">Skillshop (2025)</p>
+                            </div>
                         </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-certificate text-accent mr-2"></i>
-                            <span>Food Handler – State of Colorado (2023)</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-certificate text-accent mr-2"></i>
-                            <span>Digital Marketing & Social Media – PropertyGuru (2017)</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-certificate text-accent mr-2"></i>
-                            <span>Presentation Essentials – PropertyGuru (2017)</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-certificate text-accent mr-2"></i>
-                            <span>Emotional Intelligence – PropertyGuru (2017)</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-certificate text-accent mr-2"></i>
-                            <span>Commercial Credit Training Program – Bank Mega (2014)</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-certificate text-accent mr-2"></i>
-                            <span>Trade Finance Officer Training – Bank Mega (2011)</span>
+                        <li class="flex gap-3 bg-white p-3 rounded-lg border border-slate-100">
+                            <div class="text-slate-400 mt-0.5"><i class="ph ph-check-circle"></i></div>
+                            <div>
+                                <p class="font-semibold text-sm text-slate-700">Digital Marketing & Social Media</p>
+                                <p class="text-xs text-slate-500">PropertyGuru (2017)</p>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -286,68 +554,55 @@
         </div>
     </section>
 
-    <!-- Additional Activities -->
-    <section class="py-12 md:py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 relative pb-3 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-accent">
-                Additional Activities & Leadership
+    <!-- Call to Action / Footer -->
+    <section id="contact" class="bg-brand-900 py-16 px-6 text-center">
+        <div class="container mx-auto max-w-3xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                <span class="lang-en">Ready to Scale Your Growth?</span>
+                <span class="lang-id">Siap Menskalakan Bisnis Anda?</span>
             </h2>
-            <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md animate-fade-in">
-                <ul class="space-y-2">
-                    <li class="flex items-start">
-                        <i class="fas fa-star text-accent mt-1 mr-2"></i>
-                        <span>Founded and managed a sheep farming business using university grant capital (2010)</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-star text-accent mt-1 mr-2"></i>
-                        <span>Aikido Instructor – Student Martial Arts Unit, University of Indonesia (2009–2015)</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-star text-accent mt-1 mr-2"></i>
-                        <span>External Relations, Faculty Student Council – FEUI (2005–2006)</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-star text-accent mt-1 mr-2"></i>
-                        <span>General Secretary – Ikatan Remaja Cempaka Hijau (2003–2004)</span>
-                    </li>
-                </ul>
+            <p class="text-brand-100 mb-8 max-w-xl mx-auto">
+                <span class="lang-en">Let's discuss how data-driven Meta Ads and strategic marketing automation can boost your ROI. Available for consulting and full-time roles.</span>
+                <span class="lang-id">Mari diskusikan bagaimana Meta Ads berbasis data dan strategi pemasaran otomatis dapat meningkatkan ROI Anda.</span>
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="mailto:prama.danawira@gmail.com" class="bg-white text-brand-900 hover:bg-brand-50 px-8 py-4 rounded-full font-bold transition-colors shadow-lg flex items-center justify-center gap-2">
+                    <i class="ph ph-envelope-simple text-xl"></i> Email Me
+                </a>
+                <a href="tel:+6281284942940" class="bg-brand-800 text-white border border-brand-700 hover:bg-brand-700 px-8 py-4 rounded-full font-bold transition-colors flex items-center justify-center gap-2">
+                    <i class="ph ph-phone text-xl"></i> +62 812-8494-2940
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-primary text-white py-12">
-        <div class="container mx-auto px-4 text-center">
-            <h3 class="text-2xl font-semibold mb-6">Get In Touch</h3>
-            <p class="max-w-2xl mx-auto mb-8">Feel free to reach out for collaborations or opportunities. I'm always open to discussing new projects and ideas.</p>
-            
-            <div class="flex justify-center space-x-6 mb-8">
-                <a href="https://www.linkedin.com/in/pramadanawira/" class="text-white text-2xl hover:text-accent transition-colors duration-300">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://www.instagram.com/pramadanawira/" class="text-white text-2xl hover:text-accent transition-colors duration-300">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://web.facebook.com/prama.danawira?_rdc=1&_rdr#" class="text-white text-2xl hover:text-accent transition-colors duration-300">
-                    <i class="fab fa-facebook"></i>
-                </a>
-            </div>
-            
-            <p>© 2023 Prama Danawira. All Rights Reserved.</p>
-        </div>
+    <footer class="bg-slate-950 text-slate-400 py-8 text-center text-sm">
+        <p>&copy; 2026 Prama Danawira. Performance Marketing & Automation Specialist.</p>
     </footer>
 
+    <!-- Language Toggle Script -->
     <script>
-        // Simple animation for page elements
-        document.addEventListener('DOMContentLoaded', function() {
-            const animateElements = document.querySelectorAll('.animate-fade-in');
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('langToggle');
+            const btnText = document.getElementById('btnText');
+            const flagIcon = document.getElementById('flagIcon');
+            const htmlTag = document.documentElement;
             
-            animateElements.forEach((element, index) => {
-                element.style.opacity = 0;
-                setTimeout(() => {
-                    element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    element.style.opacity = 1;
-                }, 100 + (index * 100));
+            // Set default based on HTML lang attribute
+            let currentLang = 'en';
+            
+            toggleBtn.addEventListener('click', () => {
+                if (currentLang === 'en') {
+                    htmlTag.setAttribute('lang', 'id');
+                    btnText.textContent = 'EN';
+                    flagIcon.textContent = '🇺🇸';
+                    currentLang = 'id';
+                } else {
+                    htmlTag.setAttribute('lang', 'en');
+                    btnText.textContent = 'ID';
+                    flagIcon.textContent = '🇮🇩';
+                    currentLang = 'en';
+                }
             });
         });
     </script>
