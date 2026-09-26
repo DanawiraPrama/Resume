@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prama Danawira | Digital Business Card</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- QRCode.js library for fast client-side rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+      min-height: 100vh;
+      color: #f8fafc;
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-shine::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0) 80%
+      );
+      transform: rotate(25deg);
+      transition: all 0.75s ease;
+    }
+    .btn-shine:hover::after {
+      left: 120%;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased flex flex-col items-center justify-between p-4 sm:p-6 lg:p-8">
+
+  <div class="w-full max-w-md mx-auto my-auto space-y-5">
+    
+    <!-- Top Mode Toggle -->
+    <div class="glass-card p-1.5 rounded-2xl flex items-center justify-between shadow-xl">
+      <button id="tabCardBtn" onclick="switchView('card')" class="flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl bg-sky-500 text-white shadow-md transition-all">
+        📇 My Digital Card
+      </button>
+      <button id="tabQrBtn" onclick="switchView('qr')" class="flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl text-slate-300 hover:text-white transition-all">
+        📱 QR Code
+      </button>
+      <button id="tabGuideBtn" onclick="switchView('guide')" class="flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl text-slate-300 hover:text-white transition-all">
+        ⚙️ Setup & NFC
+      </button>
+    </div>
+
+    <div id="viewCard" class="glass-card rounded-3xl p-6 sm:p-7 shadow-2xl space-y-6 relative overflow-hidden transition-all duration-300">
+      
+      <!-- Top Badges & Share -->
+      <div class="flex items-center justify-between">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Available for Opportunities
+        </span>
+        <button onclick="shareCard()" title="Share Card" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/50 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Avatar & Name Header -->
+      <div class="text-center space-y-2">
+        <div class="relative inline-block">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl mx-auto p-1 bg-gradient-to-tr from-sky-500 via-indigo-500 to-purple-500 shadow-lg shadow-sky-500/20">
+            <div class="w-full h-full rounded-[22px] bg-slate-900 flex items-center justify-center text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-sky-400 to-indigo-200">
+              PD
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight text-white">Prama Danawira</h1>
+          <p class="text-sky-400 font-semibold text-sm mt-0.5">Senior Commercial & Growth Specialist</p>
+          <p class="text-slate-400 text-xs mt-1">13+ Yrs Sales, Marketing & B2B • Meta Ads • Python & SQL</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons (Links) -->
+      <div class="space-y-3">
+        
+        <!-- WhatsApp -->
+        <a href="https://wa.me/6281284942940?text=Hi%20Prama%2C%20I%20got%20your%20digital%20business%20card." target="_blank" rel="noopener noreferrer"
+           class="btn-shine w-full flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-emerald-600/80 to-emerald-500/80 hover:from-emerald-500 hover:to-emerald-400 text-white font-medium shadow-md transition-all">
+          <div class="flex items-center gap-3">
+            <span class="p-2 bg-emerald-700/50 rounded-xl text-lg">📱</span>
+            <div class="text-left leading-tight">
+              <span class="block text-sm font-semibold">WhatsApp Direct</span>
+              <span class="text-[11px] text-emerald-100">+62 812-8494-2940</span>
+            </div>
+          </div>
+          <span class="text-xs bg-emerald-950/40 px-2.5 py-1 rounded-lg">Chat ↗</span>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/pramadanawira/" target="_blank" rel="noopener noreferrer"
+           class="btn-shine w-full flex items-center justify-between p-3.5 rounded-2xl bg-slate-800/90 hover:bg-slate-700/90 text-white font-medium border border-slate-700/60 shadow-md transition-all">
+          <div class="flex items-center gap-3">
+            <span class="p-2 bg-sky-950/60 text-sky-400 rounded-xl text-lg">💼</span>
+            <div class="text-left leading-tight">
+              <span class="block text-sm font-semibold">LinkedIn Profile</span>
+              <span class="text-[11px] text-slate-400">linkedin.com/in/pramadanawira</span>
+            </div>
+          </div>
+          <span class="text-xs text-sky-400 bg-sky-950/40 px-2.5 py-1 rounded-lg">Connect ↗</span>
+        </a>
+
+        <!-- Online Resume -->
+        <a href="https://danawiraprama.github.io/Resume/" target="_blank" rel="noopener noreferrer"
+           class="btn-shine w-full flex items-center justify-between p-3.5 rounded-2xl bg-slate-800/90 hover:bg-slate-700/90 text-white font-medium border border-slate-700/60 shadow-md transition-all">
+          <div class="flex items-center gap-3">
+            <span class="p-2 bg-indigo-950/60 text-indigo-400 rounded-xl text-lg">📄</span>
+            <div class="text-left leading-tight">
+              <span class="block text-sm font-semibold">Online Resume</span>
+              <span class="text-[11px] text-slate-400">danawiraprama.github.io/Resume</span>
+            </div>
+          </div>
+          <span class="text-xs text-indigo-400 bg-indigo-950/40 px-2.5 py-1 rounded-lg">View ↗</span>
+        </a>
+
+        <!-- Email -->
+        <a href="mailto:prama.danawira@gmail.com"
+           class="btn-shine w-full flex items-center justify-between p-3.5 rounded-2xl bg-slate-800/90 hover:bg-slate-700/90 text-white font-medium border border-slate-700/60 shadow-md transition-all">
+          <div class="flex items-center gap-3">
+            <span class="p-2 bg-purple-950/60 text-purple-400 rounded-xl text-lg">📧</span>
+            <div class="text-left leading-tight">
+              <span class="block text-sm font-semibold">Email Inquiry</span>
+              <span class="text-[11px] text-slate-400">prama.danawira@gmail.com</span>
+            </div>
+          </div>
+          <span class="text-xs text-purple-400 bg-purple-950/40 px-2.5 py-1 rounded-lg">Send ↗</span>
+        </a>
+
+      </div>
+
+      <!-- Save Contact Directly Button (.VCF) -->
+      <button onclick="downloadVCard()" class="w-full py-3.5 px-4 rounded-2xl font-bold bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white shadow-lg shadow-sky-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Save Contact to Phone (.vcf)
+      </button>
+
+      <p class="text-center text-[11px] text-slate-500">Jakarta, Indonesia • Open to NZ & Global Relocation</p>
+    </div>
+
+    <div id="viewQr" class="hidden glass-card rounded-3xl p-6 sm:p-7 shadow-2xl space-y-6 text-center transition-all duration-300">
+      <div>
+        <h2 class="text-xl font-bold text-white">Scan My Contact Card</h2>
+        <p class="text-slate-400 text-xs mt-1">Show this screen or print it for meetings & events</p>
+      </div>
+
+      <!-- QR Code Canvas Display -->
+      <div class="p-5 bg-white rounded-3xl inline-block shadow-2xl border-4 border-slate-700/50">
+        <div id="qrcode" class="flex justify-center items-center"></div>
+      </div>
+
+      <div class="space-y-2">
+        <div class="text-xs text-slate-300 font-mono bg-slate-900/60 p-2.5 rounded-xl border border-slate-800 break-all select-all" id="currentUrlDisplay">
+          https://danawiraprama.github.io/Resume/
+        </div>
+      </div>
+
+      <!-- Actions for QR -->
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="downloadQRImage()" class="py-2.5 px-3 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold shadow transition">
+          💾 Save QR Image
+        </button>
+        <button onclick="copyCardLink()" class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold border border-slate-700 transition">
+          📋 Copy Link
+        </button>
+      </div>
+    </div>
+
+    <div id="viewGuide" class="hidden glass-card rounded-3xl p-6 shadow-2xl space-y-5 text-left text-xs transition-all duration-300 text-slate-300">
+      <div class="border-b border-slate-700 pb-3">
+        <h2 class="text-base font-bold text-white">How to Set Up NFC & Digital Card</h2>
+        <p class="text-[11px] text-slate-400">Step-by-step to make “Here, just scan this” a reality</p>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Step 1 -->
+        <div class="flex gap-3">
+          <div class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0">1</div>
+          <div>
+            <h3 class="font-semibold text-white">Host this Single HTML file (Free)</h3>
+            <p class="text-slate-400 mt-0.5 leading-relaxed">
+              Upload this single file (<code class="text-sky-300 bg-slate-900 px-1 py-0.5 rounded">index.html</code>) to your existing GitHub Pages repository:
+              <br><span class="text-sky-400 font-mono">github.com/danawiraprama/card</span>
+              <br>It will be live at: <span class="text-emerald-400 font-mono">https://danawiraprama.github.io/card/</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex gap-3">
+          <div class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0">2</div>
+          <div>
+            <h3 class="font-semibold text-white">Buy NFC Tag / Blank NFC Card</h3>
+            <p class="text-slate-400 mt-0.5 leading-relaxed">
+              Buy <strong>NTAG215</strong> or <strong>NTAG216</strong> card/sticker on Tokopedia or Shopee (costs only ~Rp 3,000 - Rp 15,000/pc).
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex gap-3">
+          <div class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0">3</div>
+          <div>
+            <h3 class="font-semibold text-white">Write the URL to NFC using your Phone</h3>
+            <ol class="list-disc pl-4 text-slate-400 space-y-1 mt-1">
+              <li>Download app: <strong>NFC Tools</strong> (Android / iOS).</li>
+              <li>Tap <strong>Write</strong> &rarr; <strong>Add a record</strong> &rarr; <strong>URL / URI</strong>.</li>
+              <li>Paste your card link (<code class="text-sky-300">https://danawiraprama.github.io/card/</code>).</li>
+              <li>Tap <strong>Write</strong>, then tap the NFC card/sticker to the back of your phone. Done!</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="flex gap-3">
+          <div class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0">4</div>
+          <div>
+            <h3 class="font-semibold text-white">How to Use at Networking Events</h3>
+            <p class="text-slate-400 mt-0.5 leading-relaxed">
+              When meeting someone, just tap your card against their phone (or show the QR Code tab on your screen). Their browser will instantly open your card, and they can click <strong>"Save Contact"</strong> with 1 tap.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-2xl border border-slate-700 z-50 flex items-center gap-2">
+      <span id="toastMsg">Notification</span>
+    </div>
+
+  </div>
+
+  <script>
+    // Tab Switching Logic
+    function switchView(view) {
+      const card = document.getElementById('viewCard');
+      const qr = document.getElementById('viewQr');
+      const guide = document.getElementById('viewGuide');
+      const btnCard = document.getElementById('tabCardBtn');
+      const btnQr = document.getElementById('tabQrBtn');
+      const btnGuide = document.getElementById('tabGuideBtn');
+
+      // Reset tabs
+      [btnCard, btnQr, btnGuide].forEach(b => {
+        b.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl text-slate-300 hover:text-white transition-all";
+      });
+
+      card.classList.add('hidden');
+      qr.classList.add('hidden');
+      guide.classList.add('hidden');
+
+      if (view === 'card') {
+        card.classList.remove('hidden');
+        btnCard.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl bg-sky-500 text-white shadow-md transition-all";
+      } else if (view === 'qr') {
+        qr.classList.remove('hidden');
+        btnQr.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl bg-sky-500 text-white shadow-md transition-all";
+      } else if (view === 'guide') {
+        guide.classList.remove('hidden');
+        btnGuide.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl bg-sky-500 text-white shadow-md transition-all";
+      }
+    }
+
+    // QR Code Generator Initialization pointing directly to your Resume
+    let qrInstance = null;
+    const defaultUrl = 'https://danawiraprama.github.io/Resume/';
+
+    window.onload = function() {
+      const qrTarget = document.getElementById("qrcode");
+      document.getElementById("currentUrlDisplay").innerText = defaultUrl;
+      
+      qrInstance = new QRCode(qrTarget, {
+        text: defaultUrl,
+        width: 180,
+        height: 180,
+        colorDark : "#0f172a",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+      });
+    };
+
+    // Download QR as PNG
+    function downloadQRImage() {
+      const qrImg = document.querySelector("#qrcode img");
+      const qrCanvas = document.querySelector("#qrcode canvas");
+
+      let dataUrl = "";
+      if (qrImg && qrImg.src) {
+        dataUrl = qrImg.src;
+      } else if (qrCanvas) {
+        dataUrl = qrCanvas.toDataURL("image/png");
+      }
+
+      if (!dataUrl) {
+        showToast("QR code still loading, please wait.");
+        return;
+      }
+
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = "Prama_Danawira_QR.png";
+      link.click();
+      showToast("QR Code image downloaded!");
+    }
+
+    // Copy Link Helper (works inside iframes)
+    function copyCardLink() {
+      const tempInput = document.createElement("input");
+      tempInput.value = defaultUrl;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+      showToast("Link copied to clipboard!");
+    }
+
+    // Share Card via Web Share API or Clipboard fallback
+    function shareCard() {
+      if (navigator.share) {
+        navigator.share({
+          title: "Prama Danawira | Digital Card",
+          text: "Connect with Prama Danawira (Commercial & Growth Specialist)",
+          url: defaultUrl
+        }).catch(() => copyCardLink());
+      } else {
+        copyCardLink();
+      }
+    }
+
+    // Generate and Download vCard (.vcf) directly into phone contacts
+    function downloadVCard() {
+      const vCardData = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "N:Danawira;Prama;;;",
+        "FN:Prama Danawira",
+        "TITLE:Senior Sales & Marketing Strategist",
+        "ORG:Commercial & Growth Specialist",
+        "TEL;TYPE=CELL,VOICE:+6281284942940",
+        "EMAIL;TYPE=INTERNET,WORK:prama.danawira@gmail.com",
+        "URL:https://danawiraprama.github.io/Resume/",
+        "X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/pramadanawira/",
+        "NOTE:13+ years commercial sales and marketing background. Meta Ads & Data Specialist.",
+        "END:VCARD"
+      ].join("\r\n");
+
+      const blob = new Blob([vCardData], { type: "text/vcard;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = url;
+      downloadLink.setAttribute("download", "Prama_Danawira.vcf");
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      URL.revokeObjectURL(url);
+      
+      showToast("Contact (.vcf) downloaded! Tap to save.");
+    }
+
+    // Toast Notification helper
+    function showToast(text) {
+      const toast = document.getElementById("toast");
+      const msg = document.getElementById("toastMsg");
+      msg.innerText = text;
+      toast.classList.remove("hidden");
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
