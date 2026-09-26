@@ -105,10 +105,10 @@
         <div class="relative inline-block">
           <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl mx-auto p-1 bg-gradient-to-tr from-sky-500 via-indigo-500 to-purple-500 shadow-lg shadow-sky-500/20">
             <img 
-              src="/images/fotoresume.webp" 
+              src="images/fotoresume.webp" 
               alt="Prama Danawira" 
               class="w-full h-full object-cover rounded-[22px]" 
-              onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/DanawiraPrama/Resume/main/images/fotoresume.webp';"
+              onerror="this.onerror=null; this.src='https://danawiraprama.github.io/Resume/images/fotoresume.webp';"
             >
           </div>
         </div>
@@ -201,7 +201,7 @@
 
       <div class="space-y-2">
         <div class="text-xs text-slate-300 font-mono bg-slate-900/60 p-2.5 rounded-xl border border-slate-800 break-all select-all" id="currentUrlDisplay">
-          https://danawiraprama.github.io/Resume/
+          https://danawiraprama.github.io/Resume/card.html
         </div>
       </div>
 
@@ -229,9 +229,8 @@
           <div>
             <h3 class="font-semibold text-white">Host this Single HTML file (Free)</h3>
             <p class="text-slate-400 mt-0.5 leading-relaxed">
-              Upload this single file (<code class="text-sky-300 bg-slate-900 px-1 py-0.5 rounded">index.html</code>) to your existing GitHub Pages repository:
-              <br><span class="text-sky-400 font-mono">github.com/danawiraprama/card</span>
-              <br>It will be live at: <span class="text-emerald-400 font-mono">https://danawiraprama.github.io/card/</span>
+              Save this file as <code class="text-sky-300 bg-slate-900 px-1 py-0.5 rounded">card.html</code> inside your existing Resume repository:
+              <br><span class="text-emerald-400 font-mono">https://danawiraprama.github.io/Resume/card.html</span>
             </p>
           </div>
         </div>
@@ -255,7 +254,7 @@
             <ol class="list-disc pl-4 text-slate-400 space-y-1 mt-1">
               <li>Download app: <strong>NFC Tools</strong> (Android / iOS).</li>
               <li>Tap <strong>Write</strong> &rarr; <strong>Add a record</strong> &rarr; <strong>URL / URI</strong>.</li>
-              <li>Paste your card link (<code class="text-sky-300">https://danawiraprama.github.io/card/</code>).</li>
+              <li>Paste your card link (<code class="text-sky-300">https://danawiraprama.github.io/Resume/card.html</code>).</li>
               <li>Tap <strong>Write</strong>, then tap the NFC card/sticker to the back of your phone. Done!</li>
             </ol>
           </div>
@@ -312,9 +311,9 @@
       }
     }
 
-    // QR Code Generator Initialization pointing directly to your Resume
+    // QR Code Generator Initialization pointing directly to your Digital Card
     let qrInstance = null;
-    const defaultUrl = 'https://danawiraprama.github.io/Resume/';
+    const defaultUrl = 'https://danawiraprama.github.io/Resume/card.html';
 
     window.onload = function() {
       const qrTarget = document.getElementById("qrcode");
