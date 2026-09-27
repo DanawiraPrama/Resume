@@ -73,7 +73,7 @@
 
   <div class="w-full max-w-md mx-auto my-auto space-y-5">
     
-    <!-- Top Mode Toggle -->
+    <!-- Top Mode Toggle (2-Tab View) -->
     <div class="glass-card p-1.5 rounded-2xl flex items-center justify-between shadow-xl">
       <button id="tabCardBtn" onclick="switchView('card')" class="flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl bg-sky-500 text-white shadow-md transition-all">
         📇 My Digital Card
@@ -81,11 +81,9 @@
       <button id="tabQrBtn" onclick="switchView('qr')" class="flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl text-slate-300 hover:text-white transition-all">
         📱 QR Code
       </button>
-      <button id="tabGuideBtn" onclick="switchView('guide')" class="flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl text-slate-300 hover:text-white transition-all">
-        ⚙️ Setup & NFC
-      </button>
     </div>
 
+    <!-- Card View -->
     <div id="viewCard" class="glass-card rounded-3xl p-6 sm:p-7 shadow-2xl space-y-6 relative overflow-hidden transition-all duration-300">
       
       <!-- Top Badges & Share -->
@@ -188,6 +186,7 @@
       <p class="text-center text-[11px] text-slate-500">Jakarta, Indonesia • Open to NZ & Global Relocation</p>
     </div>
 
+    <!-- QR Code View -->
     <div id="viewQr" class="hidden glass-card rounded-3xl p-6 sm:p-7 shadow-2xl space-y-6 text-center transition-all duration-300">
       <div>
         <h2 class="text-xl font-bold text-white">Scan to Connect</h2>
@@ -216,63 +215,6 @@
       </div>
     </div>
 
-    <div id="viewGuide" class="hidden glass-card rounded-3xl p-6 shadow-2xl space-y-5 text-left text-xs transition-all duration-300 text-slate-300">
-      <div class="border-b border-slate-700 pb-3">
-        <h2 class="text-base font-bold text-white">How to Set Up NFC & Digital Card</h2>
-        <p class="text-[11px] text-slate-400">Step-by-step to make “Here, just scan this” a reality</p>
-      </div>
-
-      <div class="space-y-4">
-        <!-- Step 1 -->
-        <div class="flex gap-3">
-          <div class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0">1</div>
-          <div>
-            <h3 class="font-semibold text-white">Host this Single HTML file (Free)</h3>
-            <p class="text-slate-400 mt-0.5 leading-relaxed">
-              Save this file as <code class="text-sky-300 bg-slate-900 px-1 py-0.5 rounded">card.html</code> inside your existing Resume repository:
-              <br><span class="text-emerald-400 font-mono">https://danawiraprama.github.io/Resume/card.html</span>
-            </p>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="flex gap-3">
-          <div class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0">2</div>
-          <div>
-            <h3 class="font-semibold text-white">Buy NFC Tag / Blank NFC Card</h3>
-            <p class="text-slate-400 mt-0.5 leading-relaxed">
-              Buy <strong>NTAG215</strong> or <strong>NTAG216</strong> card/sticker on Tokopedia or Shopee (costs only ~Rp 3,000 - Rp 15,000/pc).
-            </p>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="flex gap-3">
-          <div class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0">3</div>
-          <div>
-            <h3 class="font-semibold text-white">Write the URL to NFC using your Phone</h3>
-            <ol class="list-disc pl-4 text-slate-400 space-y-1 mt-1">
-              <li>Download app: <strong>NFC Tools</strong> (Android / iOS).</li>
-              <li>Tap <strong>Write</strong> &rarr; <strong>Add a record</strong> &rarr; <strong>URL / URI</strong>.</li>
-              <li>Paste your card link (<code class="text-sky-300">https://danawiraprama.github.io/Resume/card.html</code>).</li>
-              <li>Tap <strong>Write</strong>, then tap the NFC card/sticker to the back of your phone. Done!</li>
-            </ol>
-          </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="flex gap-3">
-          <div class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center shrink-0">4</div>
-          <div>
-            <h3 class="font-semibold text-white">How to Use at Networking Events</h3>
-            <p class="text-slate-400 mt-0.5 leading-relaxed">
-              When meeting someone, just tap your card against their phone (or show the QR Code tab on your screen). Their browser will instantly open your card, and they can click <strong>"Save Contact"</strong> with 1 tap.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Notification Toast -->
     <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-2xl border border-slate-700 z-50 flex items-center gap-2">
       <span id="toastMsg">Notification</span>
@@ -285,48 +227,45 @@
     function switchView(view) {
       const card = document.getElementById('viewCard');
       const qr = document.getElementById('viewQr');
-      const guide = document.getElementById('viewGuide');
       const btnCard = document.getElementById('tabCardBtn');
       const btnQr = document.getElementById('tabQrBtn');
-      const btnGuide = document.getElementById('tabGuideBtn');
 
-      // Reset tabs
-      [btnCard, btnQr, btnGuide].forEach(b => {
-        b.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl text-slate-300 hover:text-white transition-all";
-      });
-
-      card.classList.add('hidden');
-      qr.classList.add('hidden');
-      guide.classList.add('hidden');
+      if (!card || !qr || !btnCard || !btnQr) return;
 
       if (view === 'card') {
         card.classList.remove('hidden');
+        qr.classList.add('hidden');
         btnCard.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl bg-sky-500 text-white shadow-md transition-all";
+        btnQr.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl text-slate-300 hover:text-white transition-all";
       } else if (view === 'qr') {
         qr.classList.remove('hidden');
+        card.classList.add('hidden');
         btnQr.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl bg-sky-500 text-white shadow-md transition-all";
-      } else if (view === 'guide') {
-        guide.classList.remove('hidden');
-        btnGuide.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl bg-sky-500 text-white shadow-md transition-all";
+        btnCard.className = "flex-1 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl text-slate-300 hover:text-white transition-all";
       }
     }
 
-    // QR Code Generator Initialization pointing directly to your Digital Card
     let qrInstance = null;
     const defaultUrl = 'https://danawiraprama.github.io/Resume/card.html';
 
     window.onload = function() {
       const qrTarget = document.getElementById("qrcode");
-      document.getElementById("currentUrlDisplay").innerText = defaultUrl;
+      const urlDisplay = document.getElementById("currentUrlDisplay");
       
-      qrInstance = new QRCode(qrTarget, {
-        text: defaultUrl,
-        width: 180,
-        height: 180,
-        colorDark : "#0f172a",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
-      });
+      if (urlDisplay) {
+        urlDisplay.innerText = defaultUrl;
+      }
+      
+      if (qrTarget && typeof QRCode !== 'undefined') {
+        qrInstance = new QRCode(qrTarget, {
+          text: defaultUrl,
+          width: 180,
+          height: 180,
+          colorDark: "#0f172a",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      }
     };
 
     // Download QR as PNG
@@ -353,15 +292,19 @@
       showToast("QR Code image downloaded!");
     }
 
-    // Copy Link Helper (works inside iframes)
+    // Copy Link Helper (works reliably inside iframes)
     function copyCardLink() {
-      const tempInput = document.createElement("input");
-      tempInput.value = defaultUrl;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
-      showToast("Link copied to clipboard!");
+      try {
+        const tempInput = document.createElement("input");
+        tempInput.value = defaultUrl;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        showToast("Link copied to clipboard!");
+      } catch (err) {
+        showToast("Failed to copy link");
+      }
     }
 
     // Share Card via Web Share API or Clipboard fallback
@@ -411,6 +354,7 @@
     function showToast(text) {
       const toast = document.getElementById("toast");
       const msg = document.getElementById("toastMsg");
+      if (!toast || !msg) return;
       msg.innerText = text;
       toast.classList.remove("hidden");
       setTimeout(() => {
