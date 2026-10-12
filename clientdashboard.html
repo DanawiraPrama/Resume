@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Report Dashboard | Proof of Work</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .glass-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .progress-bar-bg { background-color: #f1f5f9; border-radius: 999px; overflow: hidden; height: 0.75rem; }
+        .progress-bar-fill { background-color: #0d9488; height: 100%; border-radius: 999px; transition: width 1s ease-in-out; }
+        
+        /* Custom Scrollbar for tables */
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .table-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .table-container::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-brand-100 selection:text-brand-900">
+
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        CC
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-semibold text-slate-900 leading-tight">Client Confidential Dashboard</h1>
+                        <p class="text-xs text-slate-500 font-medium">Client Reporting / 2026</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                        <i class="fa-solid fa-lock text-[10px] mr-1.5"></i>
+                        Historical Data
+                    </span>
+                    <button class="text-slate-400 hover:text-slate-600 transition-colors"><i class="fa-solid fa-bell"></i></button>
+                    <button class="text-slate-400 hover:text-slate-600 transition-colors"><i class="fa-solid fa-gear"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900">Overview</h2>
+                <p class="text-sm text-slate-500 mt-1">Meta Ads budget used, lead costs, replies and bookings.</p>
+            </div>
+        </div>
+
+        <!-- Info Banner -->
+        <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-4 mb-8 flex items-start gap-3">
+            <i class="fa-solid fa-circle-info text-indigo-500 mt-0.5"></i>
+            <div class="text-sm text-indigo-900">
+                <p><strong>Ad report through 27 Sep 2026</strong> | Currently viewing: 30 Jun–29 Jul 2026 · All reported weeks · SGD</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+            <!-- Metric 1 -->
+            <div class="glass-card p-5 relative overflow-hidden group hover:border-brand-300 transition-colors">
+                <div class="absolute top-0 right-0 w-16 h-16 bg-brand-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
+                <p class="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider relative z-10">Meta Ads budget used</p>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10">S$2,838.51</h3>
+                <p class="text-xs text-slate-500 relative z-10"><i class="fa-solid fa-wallet text-slate-400 mr-1"></i> Actual ad spend in period</p>
+            </div>
+            
+            <!-- Metric 2 -->
+            <div class="glass-card p-5 relative overflow-hidden group hover:border-brand-300 transition-colors">
+                <p class="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider relative z-10">Cost per lead</p>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10">S$45.06</h3>
+                <p class="text-xs text-slate-500 relative z-10"><i class="fa-solid fa-bullseye text-slate-400 mr-1"></i> 63 Meta leads (Spend ÷ Leads)</p>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="glass-card p-5 relative overflow-hidden group hover:border-brand-300 transition-colors">
+                <p class="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider relative z-10">Reply rate</p>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10">54.1%</h3>
+                <p class="text-xs text-slate-500 relative z-10"><i class="fa-solid fa-reply text-slate-400 mr-1"></i> 33 replies ÷ 61 tracker leads</p>
+            </div>
+
+            <!-- Metric 4 -->
+            <div class="glass-card p-5 relative overflow-hidden group hover:border-brand-300 transition-colors">
+                <p class="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider relative z-10">Book rate</p>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10">14.8%</h3>
+                <p class="text-xs text-slate-500 relative z-10"><i class="fa-solid fa-calendar-check text-slate-400 mr-1"></i> 9 bookings ÷ 61 tracker leads</p>
+            </div>
+
+            <!-- Metric 5 -->
+            <div class="glass-card p-5 relative overflow-hidden group hover:border-brand-300 transition-colors">
+                <p class="text-xs font-medium text-slate-500 mb-1 uppercase tracking-wider relative z-10">Cost per book</p>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10">S$315.39</h3>
+                <p class="text-xs text-slate-500 relative z-10"><i class="fa-solid fa-hand-holding-dollar text-slate-400 mr-1"></i> Ad spend ÷ 9 bookings</p>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="text-xs text-slate-400 mb-8 space-y-1">
+            <p>Budget used is actual spend; a planned budget was not provided. Reply and book rates use all tracker leads received in the same campaign and dates. Replies include PA and agent responses.</p>
+            <p>4 booking fields are blank. Book rate and cost per book use recorded bookings only. Blank fields are not treated as confirmed “No”.</p>
+            <p>This selection has 63 Meta leads and 61 tracker records. Cost per book uses period ad spend and recorded bookings; source counts need reconciliation.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            
+            <!-- Weekly Lead Volume Chart -->
+            <div class="glass-card p-6 flex flex-col">
+                <div class="mb-4 flex justify-between items-start">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Weekly lead volume</h3>
+                        <p class="text-sm text-slate-500">30 Jun–29 Jul 2026 · Selected campaign</p>
+                    </div>
+                    <div class="bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1 rounded-full">
+                        63 Total Leads
+                    </div>
+                </div>
+                <div class="flex-grow relative h-64 w-full">
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Lead to Booking Funnel -->
+            <div class="glass-card p-6">
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-slate-900">From lead to booking</h3>
+                    <p class="text-sm text-slate-500">Tracker records received in the selected period (61 matched)</p>
+                </div>
+                
+                <div class="space-y-5">
+                    <!-- Funnel Step 1 -->
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="font-medium text-slate-700">Total leads</span>
+                            <span class="font-bold text-slate-900">61</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%; background-color: #94a3b8;"></div></div>
+                    </div>
+                    <!-- Funnel Step 2 -->
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="font-medium text-slate-700">Contacted</span>
+                            <span class="font-bold text-slate-900">57</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 93.4%; background-color: #0ea5e9;"></div></div>
+                        <div class="text-right text-xs text-slate-400 mt-1">93.4% of total</div>
+                    </div>
+                    <!-- Funnel Step 3 -->
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="font-medium text-slate-700">Replied</span>
+                            <span class="font-bold text-slate-900">33</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 54.1%; background-color: #8b5cf6;"></div></div>
+                        <div class="text-right text-xs text-slate-400 mt-1">54.1% reply rate</div>
+                    </div>
+                    <!-- Funnel Step 4 -->
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="font-medium text-slate-700">Booked</span>
+                            <span class="font-bold text-slate-900">9</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 14.8%; background-color: #10b981;"></div></div>
+                        <div class="text-right text-xs text-slate-400 mt-1">14.8% book rate</div>
+                    </div>
+                    <!-- Funnel Step 5 -->
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="font-medium text-slate-700">Attended</span>
+                            <span class="font-bold text-slate-900">8</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 13.1%; background-color: #059669;"></div></div>
+                        <div class="text-right text-xs text-slate-400 mt-1">13.1% attendance rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="text-xl font-bold text-slate-900 mb-4 mt-12">Campaign overview</h3>
+        <div class="glass-card overflow-hidden mb-8">
+            <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
+                <span class="text-sm font-medium text-slate-700">30 Jun–29 Jul 2026</span>
+                <span class="text-xs text-slate-500">11 ad report rows</span>
+            </div>
+            <div class="table-container overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                    <thead class="bg-white">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 text-left font-semibold text-slate-900">Campaign</th>
+                            <th scope="col" class="px-6 py-4 text-right font-semibold text-slate-900">Budget used</th>
+                            <th scope="col" class="px-6 py-4 text-center font-semibold text-slate-900">Meta leads</th>
+                            <th scope="col" class="px-6 py-4 text-right font-semibold text-slate-900">CPL</th>
+                            <th scope="col" class="px-6 py-4 text-left font-semibold text-slate-900">Reply rate</th>
+                            <th scope="col" class="px-6 py-4 text-left font-semibold text-slate-900">Book rate</th>
+                            <th scope="col" class="px-6 py-4 text-right font-semibold text-slate-900">Cost/book</th>
+                            <th scope="col" class="px-6 py-4 text-center font-semibold text-slate-900">Attended</th>
+                            <th scope="col" class="px-6 py-4 text-left font-semibold text-slate-900">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 bg-white">
+                        <!-- Row 1 -->
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-900">Thomson Reserve</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$1,238.30</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-slate-700">34</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$36.42</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-slate-900 font-medium">62.5%</div>
+                                <div class="text-xs text-slate-500">20 / 32</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-slate-900 font-medium">21.9%</div>
+                                <div class="text-xs text-slate-500">7 / 32 · 1 blank</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$176.90</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-slate-700">6</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full border border-green-200">Running</span>
+                            </td>
+                        </tr>
+                        <!-- Row 2 -->
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-900">Lucerne Grand</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$995.73</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-slate-700">17</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$58.57</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-slate-900 font-medium">52.9%</div>
+                                <div class="text-xs text-slate-500">9 / 17</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-slate-900 font-medium">0.0%</div>
+                                <div class="text-xs text-slate-500">0 / 17 · 3 blank</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-slate-400">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-slate-700">0</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full border border-green-200">Running</span>
+                            </td>
+                        </tr>
+                        <!-- Row 3 -->
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-900">Personal Branding</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$604.48</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-slate-700">12</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$50.37</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-slate-900 font-medium">33.3%</div>
+                                <div class="text-xs text-slate-500">4 / 12</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-slate-900 font-medium">16.7%</div>
+                                <div class="text-xs text-slate-500">2 / 12</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$302.24</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-slate-700">2</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full border border-green-200">Running</span>
+                            </td>
+                        </tr>
+                        <!-- Empty Rows -->
+                        <tr class="hover:bg-slate-50 transition-colors text-slate-400">
+                            <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-500">Post Launch</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><div class="text-slate-400">0 / 0</div></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><div class="text-slate-400">0 / 0</div></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">0</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2.5 py-1 text-xs font-medium bg-slate-100 text-slate-600 rounded-full border border-slate-200">No row</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-slate-400">
+                            <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-500">Northern EC</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><div class="text-slate-400">0 / 0</div></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><div class="text-slate-400">0 / 0</div></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">0</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2.5 py-1 text-xs font-medium bg-slate-100 text-slate-600 rounded-full border border-slate-200">No row</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors text-slate-400">
+                            <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-500">Hougang Central GLS</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><div class="text-slate-400">0 / 0</div></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><div class="text-slate-400">0 / 0</div></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right">—</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center">0</td>
+                            <td class="px-6 py-4 whitespace-nowrap"><span class="px-2.5 py-1 text-xs font-medium bg-slate-100 text-slate-600 rounded-full border border-slate-200">No row</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 text-xs text-slate-500 italic">
+                Rates show recorded replies or bookings / tracker leads. Cost per book includes ad spend only. "—" means no denominator or no ad data; zero bookings never displays as S$0.
+            </div>
+        </div>
+
+        <h3 class="text-xl font-bold text-slate-900 mb-4 mt-12">Reporting period comparison</h3>
+        <p class="text-sm text-slate-500 mb-4">Full periods · selected campaign · matched lead-received dates</p>
+        
+        <!-- Period Comparison Table and Chart Layout -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-16">
+            
+            <div class="glass-card overflow-hidden xl:col-span-2">
+                <div class="table-container overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200 text-sm">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-4 text-left font-semibold text-slate-900">Period</th>
+                                <th scope="col" class="px-6 py-4 text-right font-semibold text-slate-900">Budget used</th>
+                                <th scope="col" class="px-6 py-4 text-center font-semibold text-slate-900">Leads</th>
+                                <th scope="col" class="px-6 py-4 text-right font-semibold text-slate-900">CPL</th>
+                                <th scope="col" class="px-6 py-4 text-left font-semibold text-slate-900">Reply rate</th>
+                                <th scope="col" class="px-6 py-4 text-left font-semibold text-slate-900">Book rate</th>
+                                <th scope="col" class="px-6 py-4 text-right font-semibold text-slate-900">Cost/book</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <!-- June -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="font-medium text-slate-900">June report</div>
+                                    <div class="text-xs text-slate-500">1–29 Jun 2026</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$1,664.89</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-slate-700 font-medium">25</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$66.60</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-slate-900 font-medium">76.9%</div>
+                                    <div class="text-xs text-slate-500">20 / 26</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-slate-900 font-medium">50.0%</div>
+                                    <div class="text-xs text-slate-500">13 / 26 · 2 blank</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700 font-medium">S$128.07</td>
+                            </tr>
+                            <!-- July -->
+                            <tr class="hover:bg-slate-50 transition-colors bg-brand-50 border-l-4 border-brand-500">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="font-bold text-brand-900">July report</div>
+                                    <div class="text-xs text-brand-700">30 Jun–29 Jul 2026</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-brand-900 font-semibold">S$2,838.51</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-brand-900 font-bold">63</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-brand-900 font-semibold">S$45.06</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-brand-900 font-bold">54.1%</div>
+                                    <div class="text-xs text-brand-700">33 / 61</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-brand-900 font-bold">14.8%</div>
+                                    <div class="text-xs text-brand-700">9 / 61 · 4 blank</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-brand-900 font-bold">S$315.39</td>
+                            </tr>
+                            <!-- August -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="font-medium text-slate-900">August report</div>
+                                    <div class="text-xs text-slate-500">30 Jul–31 Aug 2026</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$3,215.39</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-slate-700 font-medium">52</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$61.83</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-slate-900 font-medium">55.1%</div>
+                                    <div class="text-xs text-slate-500">27 / 49</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-slate-900 font-medium">32.7%</div>
+                                    <div class="text-xs text-slate-500">16 / 49 · 2 blank</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700 font-medium">S$200.96</td>
+                            </tr>
+                            <!-- September -->
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="font-medium text-slate-900">September report</div>
+                                    <div class="text-xs text-slate-500">1–27 Sep 2026</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$1,486.78</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-slate-700 font-medium">20</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700">S$74.34</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-slate-900 font-medium">36.8%</div>
+                                    <div class="text-xs text-slate-500">7 / 19</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-slate-900 font-medium">21.1%</div>
+                                    <div class="text-xs text-slate-500">4 / 19 · 1 blank</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-slate-700 font-medium">S$371.70</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mini Trend Chart over time -->
+            <div class="glass-card p-6 flex flex-col justify-center">
+                <h4 class="text-sm font-bold text-slate-900 mb-4 text-center">Spend vs Leads Trend</h4>
+                <div class="relative h-48 w-full">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div class="mt-4 text-[10px] text-slate-400 text-center leading-tight">
+                    Periods have different lengths and are not calendar-month comparisons. Replies and bookings are the tracker statuses in the uploaded snapshot.
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. Weekly Lead Volume Chart (Bar Chart)
+            const ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+            new Chart(ctxWeekly, {
+                type: 'bar',
+                data: {
+                    labels: ['30 Jun–5 Jul', '6–12 Jul', '13–19 Jul', '20–29 Jul'],
+                    datasets: [{
+                        label: 'Leads',
+                        data: [12, 18, 8, 25],
+                        backgroundColor: '#0d9488',
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            padding: 12,
+                            titleFont: { family: 'Inter', size: 13 },
+                            bodyFont: { family: 'Inter', size: 14, weight: 'bold' },
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f1f5f9', drawBorder: false },
+                            ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
+                        },
+                        x: {
+                            grid: { display: false, drawBorder: false },
+                            ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
+                        }
+                    }
+                }
+            });
+
+            // 2. Trend Chart for Period Comparison (Mixed Chart: Bar for Spend, Line for Leads)
+            const ctxTrend = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctxTrend, {
+                type: 'line',
+                data: {
+                    labels: ['Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'Leads Count',
+                            data: [25, 63, 52, 20],
+                            borderColor: '#4f46e5',
+                            backgroundColor: '#4f46e5',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            yAxisID: 'y1',
+                            pointBackgroundColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        },
+                        {
+                            type: 'bar',
+                            label: 'Budget (S$)',
+                            data: [1664.89, 2838.51, 3215.39, 1486.78],
+                            backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                            borderColor: 'rgba(13, 148, 136, 0.5)',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            yAxisID: 'y',
+                            barPercentage: 0.5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: { family: 'Inter', size: 10 },
+                                boxWidth: 10,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            titleFont: { family: 'Inter' },
+                            bodyFont: { family: 'Inter' }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            grid: { color: '#f1f5f9' },
+                            ticks: { display: false } // Hide complex numbers for small chart
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: false,
+                            position: 'right',
+                            grid: { drawOnChartArea: false }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
